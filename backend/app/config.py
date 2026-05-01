@@ -40,7 +40,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
     # ── CORS ─────────────────────────────────────────────────────────────────
-    CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:5173"]
+    CORS_ORIGINS: list[str] = ["*"]
 
     # ── External Integrations ────────────────────────────────────────────────
     OPENROUTER_API_KEY: str = ""
