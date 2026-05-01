@@ -1,0 +1,67 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   StatsCard — Dark Theme
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.stats-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+}
+
+.stats-card:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-glow);
+}
+
+.stats-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.stats-card--primary .stats-card__icon {
+  background: rgba(124, 92, 252, 0.15);
+  color: var(--accent-primary);
+}
+.stats-card--secondary .stats-card__icon {
+  background: rgba(94, 234, 212, 0.15);
+  color: var(--accent-secondary);
+}
+.stats-card--warning .stats-card__icon {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--accent-warning);
+}
+.stats-card--error .stats-card__icon {
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--accent-error);
+}
+
+.stats-card__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-card__value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.stats-card__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

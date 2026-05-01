@@ -1,0 +1,136 @@
+{
+  "cv_accuracy_mean": 0.9856,
+  "cv_accuracy_std": 0.0009,
+  "cv_scores": [
+    0.9865,
+    0.9853,
+    0.9854,
+    0.9843,
+    0.9868
+  ],
+  "classification_report": {
+    "Android Developer": {
+      "precision": 0.9992004797121727,
+      "recall": 0.9998,
+      "f1-score": 0.9995001499550135,
+      "support": 5000.0
+    },
+    "Backend Developer": {
+      "precision": 1.0,
+      "recall": 0.9998,
+      "f1-score": 0.9998999899989999,
+      "support": 5000.0
+    },
+    "Cloud Engineer": {
+      "precision": 0.97433346597692,
+      "recall": 0.9794,
+      "f1-score": 0.9768601635747058,
+      "support": 5000.0
+    },
+    "Data Engineer": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 5000.0
+    },
+    "Data Scientist": {
+      "precision": 0.9994001199760048,
+      "recall": 0.9996,
+      "f1-score": 0.9995000499950005,
+      "support": 5000.0
+    },
+    "Database Administrator": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 5000.0
+    },
+    "DevOps Engineer": {
+      "precision": 0.9522924411400248,
+      "recall": 0.9222,
+      "f1-score": 0.9370046738467791,
+      "support": 5000.0
+    },
+    "Frontend Developer": {
+      "precision": 0.9963971176941553,
+      "recall": 0.9956,
+      "f1-score": 0.995998399359744,
+      "support": 5000.0
+    },
+    "Full Stack Developer": {
+      "precision": 0.9954045954045954,
+      "recall": 0.9964,
+      "f1-score": 0.9959020489755122,
+      "support": 5000.0
+    },
+    "Machine Learning Engineer": {
+      "precision": 0.9995999199839968,
+      "recall": 0.9994,
+      "f1-score": 0.9994999499949995,
+      "support": 5000.0
+    },
+    "Mobile Developer": {
+      "precision": 0.9973963548968556,
+      "recall": 0.996,
+      "f1-score": 0.9966976883818673,
+      "support": 5000.0
+    },
+    "QA Engineer": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 5000.0
+    },
+    "Security Engineer": {
+      "precision": 0.9393998441153546,
+      "recall": 0.9642,
+      "f1-score": 0.9516383734701934,
+      "support": 5000.0
+    },
+    "Tech Lead": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 5000.0
+    },
+    "iOS Developer": {
+      "precision": 0.9964028776978417,
+      "recall": 0.9972,
+      "f1-score": 0.9968012794882048,
+      "support": 5000.0
+    },
+    "accuracy": 0.9899733333333334,
+    "macro avg": {
+      "precision": 0.989988481106528,
+      "recall": 0.9899733333333333,
+      "f1-score": 0.9899535178027349,
+      "support": 75000.0
+    },
+    "weighted avg": {
+      "precision": 0.989988481106528,
+      "recall": 0.9899733333333334,
+      "f1-score": 0.9899535178027344,
+      "support": 75000.0
+    }
+  },
+  "n_samples": 75000,
+  "n_features": 155,
+  "n_classes": 15,
+  "roles": [
+    "Android Developer",
+    "Backend Developer",
+    "Cloud Engineer",
+    "Data Engineer",
+    "Data Scientist",
+    "Database Administrator",
+    "DevOps Engineer",
+    "Frontend Developer",
+    "Full Stack Developer",
+    "Machine Learning Engineer",
+    "Mobile Developer",
+    "QA Engineer",
+    "Security Engineer",
+    "Tech Lead",
+    "iOS Developer"
+  ]
+}

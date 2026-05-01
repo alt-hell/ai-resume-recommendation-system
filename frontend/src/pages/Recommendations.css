@@ -1,0 +1,819 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Recommendations — Premium Dark Theme v4.0
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.recommendations-page {
+  padding: var(--space-2xl);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+}
+
+.recommendations-page__header {
+  margin-bottom: var(--space-xl);
+}
+.recommendations-page__header h1 { margin-bottom: var(--space-sm); }
+
+/* ── Layout Grid ─────────────────────────────────────────────────────────── */
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+@media (min-width: 1100px) {
+  .recommendations-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--space-2xl);
+  }
+}
+
+/* ── Empty State ─────────────────────────────────────────────────────────── */
+.recommendations-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  padding: var(--space-3xl) 0;
+  text-align: center;
+}
+
+.recommendations-empty__icon {
+  font-size: 3rem;
+  color: var(--accent-primary);
+  width: 80px; height: 80px;
+  border-radius: var(--radius-xl);
+  background: rgba(124, 92, 252, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recommendations-empty__icon--error {
+  color: var(--accent-error);
+  background: rgba(248, 113, 113, 0.12);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   NO-SKILLS BANNER
+   ══════════════════════════════════════════════════════════════════════════ */
+.no-skills-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+  background: linear-gradient(135deg, rgba(124,92,252,0.08), rgba(94,234,212,0.06));
+  border: 1px solid rgba(124,92,252,0.2);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.no-skills-banner__icon {
+  font-size: 2rem;
+  color: var(--accent-warning);
+  background: rgba(251,191,36,0.12);
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+}
+
+.no-skills-banner__text h3 {
+  font-size: 1.15rem;
+  margin-bottom: var(--space-sm);
+}
+
+.no-skills-banner__text p {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   COURSE SHOWCASE
+   ══════════════════════════════════════════════════════════════════════════ */
+.course-showcase__header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.course-showcase__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-primary);
+  background: rgba(124, 92, 252, 0.1);
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(124, 92, 252, 0.2);
+  margin-bottom: var(--space-lg);
+}
+
+.course-showcase__badge svg {
+  font-size: 1rem;
+}
+
+.course-showcase__header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: var(--space-md);
+}
+
+.course-showcase__header > p {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.course-showcase__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-xl);
+}
+
+/* ── Individual Course Card ──────────────────────────────────────────────── */
+.course-card {
+  position: relative;
+  padding: var(--space-xl);
+  padding-top: calc(var(--space-xl) + 4px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+}
+
+.course-card:hover {
+  border-color: rgba(124, 92, 252, 0.35);
+  box-shadow:
+    0 20px 60px -15px rgba(0,0,0,0.4),
+    0 0 40px -10px rgba(124, 92, 252, 0.15);
+}
+
+.course-card__accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.course-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.course-card__icon {
+  font-size: 1.8rem;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.course-card__icon svg {
+  color: var(--text-primary);
+}
+
+.course-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.course-card__provider,
+.course-card__duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.course-card__provider svg {
+  color: var(--accent-success);
+  font-size: 0.85rem;
+}
+
+.course-card__duration svg {
+  font-size: 0.85rem;
+}
+
+.course-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.course-card__desc {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* ── Benefits ────────────────────────────────────────────────────────────── */
+.course-card__benefits {
+  padding: var(--space-md);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.course-card__benefits h4 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.course-card__benefits ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.course-card__benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.course-card__benefit-icon {
+  flex-shrink: 0;
+  color: var(--accent-success);
+  font-size: 1rem;
+  margin-top: 1px;
+}
+
+/* ── Skills Tags ─────────────────────────────────────────────────────────── */
+.course-card__skills h4 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.course-card__skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.course-card__skill-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(124, 92, 252, 0.1);
+  color: var(--accent-tertiary);
+  border: 1px solid rgba(124, 92, 252, 0.18);
+  transition: all 0.2s ease;
+}
+
+.course-card__skill-tag:hover {
+  background: rgba(124, 92, 252, 0.2);
+  border-color: rgba(124, 92, 252, 0.35);
+}
+
+/* ── Career Outcomes ─────────────────────────────────────────────────────── */
+.course-card__outcomes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-md);
+  background: linear-gradient(135deg, rgba(94,234,212,0.05), rgba(124,92,252,0.05));
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.course-card__outcome-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.course-card__outcome-item svg {
+  font-size: 1rem;
+  flex-shrink: 0;
+  color: var(--accent-success);
+}
+
+/* ── CTA Button ──────────────────────────────────────────────────────────── */
+.course-card__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: auto;
+  transition: all 0.25s ease;
+  letter-spacing: 0.02em;
+}
+
+.course-card__cta:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px -8px rgba(124, 92, 252, 0.4);
+}
+
+.course-card__cta svg {
+  font-size: 1rem;
+}
+
+/* ── Showcase Footer ─────────────────────────────────────────────────────── */
+.course-showcase__footer {
+  text-align: center;
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   EXISTING STYLES (Domain Fit, Salary, etc.)
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Advanced Fit Card ────────────────────────────────────────────────────── */
+.rec-fit-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.rec-fit-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+}
+
+.rec-fit-card__content { padding: var(--space-xl); }
+
+.rec-fit-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  background: rgba(124, 92, 252, 0.12);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-md);
+}
+
+.rec-fit-card__title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: var(--space-sm);
+}
+
+.rec-fit-card__desc {
+  font-size: 1rem;
+  margin-bottom: var(--space-lg);
+  max-width: 800px;
+  line-height: 1.7;
+}
+
+.rec-feedback-box {
+  background: rgba(251, 191, 36, 0.08);
+  border-left: 4px solid var(--accent-warning);
+  padding: var(--space-md);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-bottom: var(--space-lg);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.institute-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  background: linear-gradient(to right, rgba(124, 92, 252, 0.06), transparent);
+  border: 1px solid var(--border-subtle);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-xl);
+}
+
+.institute-cta__icon {
+  font-size: 2rem;
+  color: var(--accent-primary);
+  background: rgba(124, 92, 252, 0.12);
+  padding: 16px;
+  border-radius: var(--radius-md);
+}
+
+.institute-cta__text { flex: 1; }
+.institute-cta__text h4 { font-size: 1.05rem; margin-bottom: 4px; }
+.institute-cta__text p { font-size: 0.85rem; color: var(--text-muted); }
+
+/* ── Salary Card ─────────────────────────────────────────────────────────── */
+.rec-salary-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-xl);
+  transition: all var(--transition-base);
+}
+
+.rec-salary-card:hover {
+  border-color: rgba(52, 211, 153, 0.3);
+  box-shadow: var(--shadow-glow-teal);
+}
+
+.rec-salary-card__icon {
+  font-size: 2rem;
+  color: var(--accent-success);
+  background: rgba(52, 211, 153, 0.1);
+  padding: 12px;
+  border-radius: var(--radius-md);
+}
+
+.rec-salary-card h4 {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 2px;
+}
+
+.rec-salary-card__range {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent-success);
+  margin-bottom: 2px;
+}
+
+.rec-salary-card__role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ── Top Roles ───────────────────────────────────────────────────────────── */
+.rec-roles-card {
+  padding: var(--space-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.role-bar__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: 4px;
+}
+
+.role-bar__rank {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 24px;
+}
+
+.role-bar__name {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.role-bar__pct {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.role-bar__track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.role-bar__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+}
+
+/* ── Interview Prep ────────────────────────────────────────────────────── */
+.prep-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.prep-section__desc {
+  margin-bottom: var(--space-md);
+  font-size: 0.9rem;
+}
+
+.prep-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.prep-list__item {
+  padding: var(--space-md);
+  background: var(--bg-elevated);
+  border-left: 3px solid var(--accent-secondary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+/* ── Stats Row ───────────────────────────────────────────────────────────── */
+.rec-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
+.rec-section { margin-bottom: var(--space-xl); }
+
+.rec-section__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 1.1rem;
+  margin-bottom: var(--space-md);
+}
+
+.rec-skills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* ── Skill Gap ───────────────────────────────────────────────────────────── */
+.rec-gap-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.rec-gap-item {
+  padding: var(--space-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.rec-gap-item:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+}
+
+.rec-gap-item--core {
+  border-left: 3px solid var(--accent-tertiary);
+}
+
+.rec-gap-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  gap: var(--space-sm);
+}
+
+.rec-gap-item__name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.rec-gap-item__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.rec-gap-item__badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-tertiary);
+  background: rgba(167, 139, 250, 0.12);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.rec-gap-item__category {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.rec-gap-item__resource {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ── CTA ─────────────────────────────────────────────────────────────────── */
+.rec-cta {
+  text-align: center;
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ── Career Exploration Section ─────────────────────────────────────────── */
+.rec-explore {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-2xl);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.rec-explore__header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.rec-explore__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-secondary);
+  background: rgba(94, 234, 212, 0.1);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(94, 234, 212, 0.2);
+  margin-bottom: var(--space-md);
+}
+
+.rec-explore__header h2 {
+  font-size: 1.8rem;
+  margin-bottom: var(--space-sm);
+}
+
+.rec-explore__header p {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+}
+
+.rec-explore__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+.rec-explore-card {
+  padding: var(--space-xl);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.rec-explore-card:hover {
+  border-color: rgba(94, 234, 212, 0.3);
+  box-shadow: var(--shadow-glow-teal);
+}
+
+.rec-explore-card__icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-xs);
+  color: var(--accent-secondary);
+}
+
+.rec-explore-card h3 {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+
+.rec-explore-card > p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.rec-explore-card__why,
+.rec-explore-card__prereq {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+}
+
+.rec-explore-card__why svg,
+.rec-explore-card__prereq svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 1rem;
+}
+
+.rec-explore-card__why svg { color: var(--accent-warning); }
+.rec-explore-card__prereq svg { color: var(--accent-success); }
+
+.rec-explore-card__skills h4 {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rec-explore-card__skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rec-explore-card__skill-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(124, 92, 252, 0.1);
+  color: var(--accent-tertiary);
+  border: 1px solid rgba(124, 92, 252, 0.15);
+}
+
+.rec-explore-card__actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .recommendations-page { padding: var(--space-lg); }
+  .rec-fit-card__title { font-size: 1.8rem; }
+  .rec-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .rec-gap-list { grid-template-columns: 1fr; }
+  .institute-cta { flex-direction: column; text-align: center; }
+  .rec-explore__grid { grid-template-columns: 1fr; }
+  .rec-gap-item__header { flex-wrap: wrap; }
+  .course-showcase__grid { grid-template-columns: 1fr; }
+  .course-showcase__header h2 { font-size: 1.5rem; }
+  .no-skills-banner { flex-direction: column; text-align: center; align-items: center; }
+}

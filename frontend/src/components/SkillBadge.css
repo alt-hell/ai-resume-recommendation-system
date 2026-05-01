@@ -1,0 +1,34 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   SkillBadge — Dark Theme
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.skill-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  border: 1px solid;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.skill-badge:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.15);
+}
+
+.skill-badge--md {
+  font-size: 0.8rem;
+  padding: 5px 14px;
+}
+
+.skill-badge--sm {
+  font-size: 0.7rem;
+  padding: 3px 10px;
+}
+
+.skill-badge--lg {
+  font-size: 0.9rem;
+  padding: 6px 16px;
+}
