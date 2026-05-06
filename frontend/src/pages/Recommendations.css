@@ -807,13 +807,45 @@
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .recommendations-page { padding: var(--space-lg); }
-  .rec-fit-card__title { font-size: 1.8rem; }
-  .rec-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .recommendations-page__header h1 { font-size: 1.8rem; line-height: 1.3; }
+  .recommendations-page__header p { font-size: 0.9rem; }
+  
+  .rec-fit-card__content { padding: var(--space-md); }
+  .rec-fit-card__title { font-size: 1.6rem; }
+  .rec-fit-card__desc { font-size: 0.9rem; }
+  
+  .rec-salary-card { 
+    flex-direction: column; 
+    text-align: center; 
+    gap: var(--space-sm); 
+    padding: var(--space-md); 
+  }
+  .rec-salary-card__range { font-size: 1.2rem; }
+  
+  .rec-stats-row { grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); }
+  
+  .prep-card { padding: var(--space-md); }
+  .prep-list__item { padding: var(--space-md); font-size: 0.85rem; }
+  
   .rec-gap-list { grid-template-columns: 1fr; }
-  .institute-cta { flex-direction: column; text-align: center; }
+  .rec-gap-item { padding: var(--space-md); }
+  .rec-gap-item__header { flex-wrap: wrap; flex-direction: column; align-items: flex-start; gap: var(--space-sm); }
+  .rec-gap-item__actions { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
+  
+  .institute-cta { flex-direction: column; text-align: center; padding: var(--space-md); }
+  
+  .rec-explore { margin-top: var(--space-xl); padding-top: var(--space-xl); }
+  .rec-explore__header h2 { font-size: 1.5rem; }
   .rec-explore__grid { grid-template-columns: 1fr; }
-  .rec-gap-item__header { flex-wrap: wrap; }
+  .rec-explore-card { padding: var(--space-md); }
+  .rec-explore-card__actions { flex-direction: column; width: 100%; }
+  .rec-explore-card__actions .btn { width: 100%; justify-content: center; }
+  
   .course-showcase__grid { grid-template-columns: 1fr; }
   .course-showcase__header h2 { font-size: 1.5rem; }
-  .no-skills-banner { flex-direction: column; text-align: center; align-items: center; }
+  .course-card { padding: var(--space-md); padding-top: calc(var(--space-md) + 4px); }
+  .course-card__header { flex-direction: column; align-items: flex-start; }
+  .course-card__meta { align-items: flex-start; }
+  
+  .no-skills-banner { flex-direction: column; text-align: center; align-items: center; padding: var(--space-md); }
 }
