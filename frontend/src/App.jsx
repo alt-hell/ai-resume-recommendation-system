@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import AnimatedBackground from './components/AnimatedBackground';
 import Dashboard from './pages/Dashboard';
@@ -9,14 +10,15 @@ import ResumeCoach from './pages/ResumeCoach';
 import CareerAdvisor from './pages/CareerAdvisor';
 import './App.css';
 
-function App() {
+function AppContent() {
+  const location = useLocation();
   return (
-    <BrowserRouter>
-      <div className="app-layout" id="app-root">
-        <AnimatedBackground />
-        <Navbar />
-        <main className="app-main">
-          <Routes>
+    <div className="app-layout" id="app-root">
+      <AnimatedBackground />
+      <Navbar />
+      <main className="app-main">
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/recommendations" element={<Recommendations />} />
@@ -24,8 +26,16 @@ function App() {
             <Route path="/resume-coach" element={<ResumeCoach />} />
             <Route path="/career-advisor" element={<CareerAdvisor />} />
           </Routes>
-        </main>
-      </div>
+        </AnimatePresence>
+      </main>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }

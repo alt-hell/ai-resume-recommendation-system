@@ -83,10 +83,14 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   return (
-    <div className="dashboard page-enter" id="dashboard-page">
-
-
-      {/* Hero Section */}
+    <motion.div 
+      className="dashboard" 
+      id="dashboard-page"
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.4 }}
+    >      {/* Hero Section */}
       <section className="dashboard__hero">
         <div className="dashboard__hero-glow" />
         <motion.div
@@ -244,6 +248,6 @@ export default function Dashboard() {
           ))}
         </div>
       </motion.section>
-    </div>
+    </motion.div>
   );
 }

@@ -92,9 +92,14 @@ export default function CareerAdvisor() {
   };
 
   return (
-    <div className="advisor-page page-enter" id="career-advisor-page">
-
-
+    <motion.div 
+      className="advisor-page" 
+      id="career-advisor-page"
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.4 }}
+    >
       <motion.div
         className="advisor-container"
         initial={{ opacity: 0, y: 20 }}
@@ -243,6 +248,6 @@ export default function CareerAdvisor() {
           </p>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

@@ -233,7 +233,7 @@ export default function Recommendations() {
 
   if (!resumeId) {
     return (
-      <div className="recommendations-page page-enter" id="recommendations-page">
+      <motion.div className="recommendations-page" id="recommendations-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <div className="recommendations-empty">
           <div className="recommendations-empty__icon"><HiOutlineBriefcase /></div>
           <h2>No Resume Uploaded Yet</h2>
@@ -242,21 +242,21 @@ export default function Recommendations() {
             Upload Resume
           </button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   if (loading) {
     return (
-      <div className="recommendations-page page-enter" id="recommendations-page">
+      <motion.div className="recommendations-page" id="recommendations-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <LoadingSpinner message="Analyzing domain fit and formulating advanced career insights..." />
-      </div>
+      </motion.div>
     );
   }
 
   if (error) {
     return (
-      <div className="recommendations-page page-enter" id="recommendations-page">
+      <motion.div className="recommendations-page" id="recommendations-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <div className="recommendations-empty">
           <div className="recommendations-empty__icon recommendations-empty__icon--error">
             <HiOutlineExclamationCircle />
@@ -267,22 +267,22 @@ export default function Recommendations() {
             Retry Analysis
           </button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   if (!data) {
     return (
-      <div className="recommendations-page page-enter" id="recommendations-page">
+      <motion.div className="recommendations-page" id="recommendations-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <LoadingSpinner message="Loading career insights..." />
-      </div>
+      </motion.div>
     );
   }
 
   /* ── No-Skills User → Course Showcase ─────────────────────────────────── */
   if (data.is_no_skills_user && data.correlation_courses?.length > 0) {
     return (
-      <div className="recommendations-page page-enter" id="recommendations-page">
+      <motion.div className="recommendations-page" id="recommendations-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <div className="recommendations-page__header">
             <h1>Career <span className="gradient-text">Launchpad</span></h1>
@@ -307,7 +307,7 @@ export default function Recommendations() {
 
           <CourseShowcase courses={data.correlation_courses} />
         </motion.div>
-      </div>
+      </motion.div>
     );
   }
 
@@ -315,7 +315,7 @@ export default function Recommendations() {
   const salaryMax = data.salary_range_inr?.max ? (data.salary_range_inr.max / 100000).toFixed(0) : null;
 
   return (
-    <div className="recommendations-page page-enter" id="recommendations-page">
+    <motion.div className="recommendations-page" id="recommendations-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
         {/* Header */}
         <div className="recommendations-page__header">
@@ -523,6 +523,6 @@ export default function Recommendations() {
           </motion.section>
         )}
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

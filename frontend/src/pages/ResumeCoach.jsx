@@ -158,7 +158,7 @@ export default function ResumeCoach() {
 
   if (!resumeId) {
     return (
-      <div className="coach-page page-enter" id="resume-coach-page">
+      <motion.div className="coach-page" id="resume-coach-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <div className="coach-empty">
           <div className="coach-empty__icon"><HiOutlineAcademicCap /></div>
           <h2>No Resume Uploaded</h2>
@@ -167,28 +167,28 @@ export default function ResumeCoach() {
             <HiOutlineCloudUpload /> Upload Resume
           </button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   if (loading) {
     return (
-      <div className="coach-page page-enter" id="resume-coach-page">
+      <motion.div className="coach-page" id="resume-coach-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <LoadingSpinner message="Generating your personalized resume coaching..." />
-      </div>
+      </motion.div>
     );
   }
 
   if (error) {
     return (
-      <div className="coach-page page-enter" id="resume-coach-page">
+      <motion.div className="coach-page" id="resume-coach-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <div className="coach-empty">
           <div className="coach-empty__icon coach-empty__icon--error"><HiOutlineExclamationCircle /></div>
           <h2>Something went wrong</h2>
           <p>{error}</p>
           <button className="btn btn--primary" onClick={fetchCoaching}>Retry</button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
@@ -206,7 +206,7 @@ export default function ResumeCoach() {
   ];
 
   return (
-    <div className="coach-page page-enter" id="resume-coach-page">
+    <motion.div className="coach-page" id="resume-coach-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         {/* Header */}
         <div className="coach-page__header">
@@ -412,6 +412,6 @@ export default function ResumeCoach() {
           </div>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

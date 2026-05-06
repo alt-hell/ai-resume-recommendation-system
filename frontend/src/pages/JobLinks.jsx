@@ -113,7 +113,7 @@ export default function JobLinks() {
   /* ── No resume in storage at all ─────────────────────────────────── */
   if (!resumeId) {
     return (
-      <div className="joblinks-page page-enter">
+      <motion.div className="joblinks-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <div className="joblinks-empty">
           <div className="joblinks-empty__icon"><HiOutlineBriefcase /></div>
           <h2>No Resume Uploaded</h2>
@@ -122,21 +122,21 @@ export default function JobLinks() {
             Upload Resume
           </button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   if (loading) {
     return (
-      <div className="joblinks-page page-enter">
+      <motion.div className="joblinks-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <LoadingSpinner message="Finding the best job matches for your profile…" />
-      </div>
+      </motion.div>
     );
   }
 
   if (error) {
     return (
-      <div className="joblinks-page page-enter">
+      <motion.div className="joblinks-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <div className="joblinks-empty">
           <div className="joblinks-empty__icon joblinks-empty__icon--error">
             <HiOutlineExclamationCircle />
@@ -152,21 +152,21 @@ export default function JobLinks() {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   if (!data) {
     return (
-      <div className="joblinks-page page-enter">
+      <motion.div className="joblinks-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
         <LoadingSpinner message="Loading job opportunities…" />
-      </div>
+      </motion.div>
     );
   }
 
   /* ── Main render ─────────────────────────────────────────────────── */
   return (
-    <div className="joblinks-page page-enter">
+    <motion.div className="joblinks-page" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4 }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
 
         {/* Header */}
@@ -265,6 +265,6 @@ export default function JobLinks() {
         </div>
 
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
