@@ -1,0 +1,165 @@
+.ai-bot-container {
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 280px;
+  margin: 0 auto;
+}
+
+.ai-bot {
+  position: relative;
+  width: 160px;
+  height: 140px;
+  transform-style: preserve-3d;
+  cursor: grab;
+}
+
+.ai-bot:active {
+  cursor: grabbing;
+}
+
+.ai-bot-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(124, 92, 252, 0.4) 0%, transparent 70%);
+  filter: blur(20px);
+  z-index: -1;
+  animation: pulseAura 3s infinite alternate ease-in-out;
+}
+
+@keyframes pulseAura {
+  0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+}
+
+.ai-bot-head {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 45px;
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 0 25px rgba(124, 92, 252, 0.2), 0 15px 35px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  /* Give the head some depth */
+  transform: translateZ(20px);
+}
+
+.ai-bot-ear {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 40px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: -1;
+}
+
+.ai-bot-ear.left {
+  left: -12px;
+  border-radius: 8px 0 0 8px;
+}
+
+.ai-bot-ear.right {
+  right: -12px;
+  border-radius: 0 8px 8px 0;
+}
+
+.ai-bot-ear-light {
+  width: 4px;
+  height: 16px;
+  background: var(--accent-primary);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--accent-primary);
+  animation: earBlink 2s infinite alternate;
+}
+
+@keyframes earBlink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--accent-primary); }
+  50% { opacity: 0.4; box-shadow: 0 0 4px var(--accent-primary); }
+}
+
+.ai-bot-face {
+  width: 125px;
+  height: 85px;
+  background: rgba(10, 10, 18, 0.9);
+  border-radius: 24px;
+  border: 2px solid rgba(124, 92, 252, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,1), 0 0 15px rgba(124, 92, 252, 0.2);
+  transform: translateZ(10px); /* Pop out of the glass slightly */
+}
+
+/* Scanline effect on the screen */
+.ai-bot-face::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(rgba(124, 92, 252, 0) 50%, rgba(124, 92, 252, 0.05) 50%);
+  background-size: 100% 4px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ai-bot-eyes {
+  display: flex;
+  gap: 24px;
+  margin-top: 4px;
+}
+
+.ai-bot-eye {
+  width: 26px;
+  height: 26px;
+  background: rgba(124, 92, 252, 0.15);
+  border-radius: 50%;
+  border: 2px solid var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px var(--accent-primary), inset 0 0 8px var(--accent-primary);
+}
+
+.ai-bot-pupil {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #fff, 0 0 15px var(--accent-primary);
+  transform-origin: center;
+}
+
+.ai-bot-mouth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 24px;
+}
+
+.ai-bot-wave {
+  width: 6px;
+  background: var(--accent-secondary);
+  border-radius: 3px;
+  box-shadow: 0 0 10px var(--accent-secondary);
+}

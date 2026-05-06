@@ -333,7 +333,9 @@ export default function Recommendations() {
                 <div className="rec-fit-card__badge">
                   <HiOutlineBriefcase /> Best Match: {data.predicted_role}
                 </div>
-                <h2 className="rec-fit-card__title">Domain Fit: {data.domain_fit_percentage || (data.confidence * 100).toFixed(0)}%</h2>
+                <h2 className="rec-fit-card__title">
+                  Domain Fit: {Number(data.domain_fit_percentage || data.confidence * 100).toFixed(0)}%
+                </h2>
                 <p className="rec-fit-card__desc">{data.advanced_insights}</p>
                 {data.action_verb_feedback && (
                    <div className="rec-feedback-box">

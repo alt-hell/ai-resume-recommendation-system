@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { HiOutlineCloudUpload, HiOutlineLightBulb, HiOutlineExternalLink, HiOutlineAcademicCap, HiOutlineChevronRight, HiOutlineSparkles, HiOutlineChip, HiOutlineShieldCheck, HiOutlineTrendingUp, HiOutlineCube } from 'react-icons/hi';
+import AIBotAnimation from '../components/AIBotAnimation';
 import './Dashboard.css';
 
 const features = [
@@ -93,6 +94,7 @@ export default function Dashboard() {
     >      {/* Hero Section */}
       <section className="dashboard__hero">
         <div className="dashboard__hero-glow" />
+        <AIBotAnimation />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
