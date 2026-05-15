@@ -79,21 +79,35 @@ export default function Upload() {
     setError(null);
     setStage(0);
 
-    const stageInterval = setInterval(() => {
-      setStage((prev) => Math.min(prev + 1, ANALYSIS_STAGES.length - 1));
-    }, 1500);
+    // Accelerating stage progression: stages 0→3 advance quickly,
+    // stage 4 holds with visual spinner until the response arrives.
+    const stageTimers = [500, 500, 500, 500]; // ms per stage transition
+    let currentStage = 0;
+    const advanceStage = () => {
+      if (currentStage < stageTimers.length) {
+        setTimeout(() => {
+          currentStage++;
+          setStage(currentStage);
+          advanceStage();
+        }, stageTimers[currentStage]);
+      }
+    };
+    advanceStage();
 
     try {
       const data = await uploadResume(selectedFile);
+      setStage(ANALYSIS_STAGES.length); // Mark complete
       setResult(data);
       sessionStorage.setItem('resumeData',   JSON.stringify(data));
       sessionStorage.setItem('resumeId',     data.resume_id);
+      // Also persist to localStorage so data survives page refresh
+      localStorage.setItem('resumeData',     JSON.stringify(data));
+      localStorage.setItem('resumeId',       data.resume_id);
       sessionStorage.removeItem('recommendationData');
       sessionStorage.removeItem('jobLinksData');
     } catch (err) {
       setError(err.message || 'Upload failed. Please try again.');
     } finally {
-      clearInterval(stageInterval);
       setUploading(false);
     }
   }, []);

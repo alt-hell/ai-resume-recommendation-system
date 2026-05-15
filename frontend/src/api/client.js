@@ -85,9 +85,10 @@ export async function askCareerAdvisor(resumeId, question) {
   return data;
 }
 
-/** Get suggested career advisor prompts */
-export async function getCareerPrompts() {
-  const { data } = await api.get('/career-advisor/prompts');
+/** Get suggested career advisor prompts (personalized if resumeId provided) */
+export async function getCareerPrompts(resumeId) {
+  const params = resumeId ? { resume_id: resumeId } : {};
+  const { data } = await api.get('/career-advisor/prompts', { params });
   return data;
 }
 

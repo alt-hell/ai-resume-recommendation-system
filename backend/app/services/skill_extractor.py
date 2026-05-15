@@ -166,13 +166,23 @@ async def extract_skills(cleaned_text: str) -> SkillExtractionResult:
 
 
 def _extract_skills_sync(cleaned_text: str) -> SkillExtractionResult:
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    import time
+
+    t0 = time.perf_counter()
     all_skills: list[str] = []
     source_parts: list[str] = []
     section_header = None
     best_confidence = 0.0
 
-    # ── Strategy 1: Section-based parsing (FASTEST) ────────────────────────
-    section_result = _extract_from_section(cleaned_text)
+    # ── Strategies 1-3: Run in PARALLEL (they are independent) ─────────────
+    with ThreadPoolExecutor(max_workers=3, thread_name_prefix="skill") as pool:
+        future_section    = pool.submit(_extract_from_section, cleaned_text)
+        future_keyword    = pool.submit(_extract_from_keywords, cleaned_text)
+        future_contextual = pool.submit(_extract_from_context, cleaned_text)
+
+    # Collect results (futures are already done after __exit__)
+    section_result = future_section.result()
     if section_result.skills:
         all_skills.extend(section_result.skills)
         source_parts.append("section")
@@ -181,21 +191,22 @@ def _extract_skills_sync(cleaned_text: str) -> SkillExtractionResult:
         logger.info("Strategy 1 (Section): %d skills from '%s'",
                      len(section_result.skills), section_result.section_header)
 
-    # ── Strategy 2: Full-document keyword matching (HIGH PRECISION) ────────
-    keyword_result = _extract_from_keywords(cleaned_text)
+    keyword_result = future_keyword.result()
     if keyword_result.skills:
         all_skills.extend(keyword_result.skills)
         source_parts.append("keyword")
         best_confidence = max(best_confidence, keyword_result.confidence)
         logger.info("Strategy 2 (Keyword): %d skills", len(keyword_result.skills))
 
-    # ── Strategy 3: Contextual pattern extraction ──────────────────────────
-    contextual_result = _extract_from_context(cleaned_text)
+    contextual_result = future_contextual.result()
     if contextual_result.skills:
         all_skills.extend(contextual_result.skills)
         source_parts.append("contextual")
         best_confidence = max(best_confidence, contextual_result.confidence)
         logger.info("Strategy 3 (Contextual): %d skills", len(contextual_result.skills))
+
+    t1 = time.perf_counter()
+    logger.info("⏱  Parallel strategies 1-3: %.0f ms", (t1 - t0) * 1000)
 
     # ── Strategy 4: spaCy NER (ONLY if few skills found so far) ───────────
     current_unique = len(set(s.lower() for s in all_skills))
@@ -221,8 +232,8 @@ def _extract_skills_sync(cleaned_text: str) -> SkillExtractionResult:
     elif len(source_parts) >= 2:
         best_confidence = min(1.0, best_confidence + 0.1)
 
-    logger.info("Final: %d unique skills from [%s] (confidence=%.2f)",
-                len(merged), source, best_confidence)
+    logger.info("Final: %d unique skills from [%s] (confidence=%.2f) — TOTAL %.0f ms",
+                len(merged), source, best_confidence, (time.perf_counter() - t0) * 1000)
 
     return SkillExtractionResult(
         skills=merged,

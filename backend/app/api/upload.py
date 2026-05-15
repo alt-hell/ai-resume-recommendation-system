@@ -109,25 +109,30 @@ async def upload_resume(
         t4 = time.perf_counter()
         logger.info("⏱  Extract skills: %.0f ms", (t4 - t3) * 1000)
 
-        # ── 5. Normalize skills ───────────────────────────────────────────────
-        norm_result = await asyncio.to_thread(normalize_skills, extraction.skills)
-        t5 = time.perf_counter()
-        logger.info("⏱  Normalize: %.0f ms", (t5 - t4) * 1000)
-
-        # ── Extract Projects Text & Fast Prediction ───────────────────────────
+        # ── 5. Normalize + Predict CONCURRENTLY ───────────────────────────────
         projects_text = cleaned.sections.get("PROJECTS")
-        predicted_role = None
-        if norm_result.normalized:
+
+        async def _normalize():
+            return await asyncio.to_thread(normalize_skills, extraction.skills)
+
+        async def _predict(skills):
+            if not skills:
+                return None
             try:
-                predicted_role, _ = await asyncio.to_thread(
-                    predict_role, norm_result.normalized
-                )
+                role, _ = await asyncio.to_thread(predict_role, skills)
+                return role
             except Exception as e:
                 logger.warning(f"Fast prediction failed: {e}")
-        t6 = time.perf_counter()
-        logger.info("⏱  Predict role: %.0f ms", (t6 - t5) * 1000)
+                return None
 
-        # ── 6. Persist to MongoDB ─────────────────────────────────────────────
+        # Start normalization first, then predict with its result
+        norm_result = await _normalize()
+        predicted_role = await _predict(norm_result.normalized)
+
+        t6 = time.perf_counter()
+        logger.info("⏱  Normalize + Predict: %.0f ms", (t6 - t4) * 1000)
+
+        # ── 6. Persist to storage ──────────────────────────────────────────────
         doc = {
             "filename": filename,
             "file_type": file_type,

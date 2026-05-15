@@ -208,7 +208,7 @@ export default function Recommendations() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const resumeId = sessionStorage.getItem('resumeId');
+  const resumeId = sessionStorage.getItem('resumeId') || localStorage.getItem('resumeId');
 
   const fetchRecommendation = async () => {
     if (!resumeId) return;

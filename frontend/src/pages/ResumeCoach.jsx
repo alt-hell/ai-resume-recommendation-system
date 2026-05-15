@@ -134,7 +134,7 @@ export default function ResumeCoach() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const resumeId = sessionStorage.getItem('resumeId');
+  const resumeId = sessionStorage.getItem('resumeId') || localStorage.getItem('resumeId');
 
   const fetchCoaching = async () => {
     if (!resumeId) return;

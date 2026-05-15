@@ -63,9 +63,20 @@ async def lifespan(app: FastAPI):
         logger.error("⚠️  Startup failed: %s", exc)
         logger.warning("Running WITHOUT database. Persistence endpoints will fail.")
 
-    # Pre-load heavy models (SpaCy) in the background so it doesn't block startup
-    # but is ready before or during the first request.
+    # Pre-load heavy models (SpaCy + keyword registry) in the background so it
+    # doesn't block startup but is ready before or during the first request.
     asyncio.create_task(asyncio.to_thread(preload_models))
+
+    # Pre-load ML artifacts (XGBoost model, vectorizer, label encoder) so the
+    # first upload doesn't pay the disk-loading penalty (~100ms).
+    async def _preload_ml():
+        try:
+            from app.services.recommendation_engine import _load_artifacts
+            await asyncio.to_thread(_load_artifacts)
+            logger.info("ML artifacts pre-loaded successfully.")
+        except Exception as exc:
+            logger.warning("ML artifact preload skipped: %s", exc)
+    asyncio.create_task(_preload_ml())
 
     yield  # ← Application runs here
 

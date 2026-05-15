@@ -45,7 +45,7 @@ class FileBackedCollection:
             self.data = {}
 
     def _save(self):
-        """Persist data to disk."""
+        """Persist data to disk (synchronous — call from thread only)."""
         _STORAGE_DIR.mkdir(parents=True, exist_ok=True)
         try:
             with open(self._file, "w", encoding="utf-8") as f:
@@ -53,13 +53,37 @@ class FileBackedCollection:
         except Exception as exc:
             logger.error("Failed to save %s: %s", self._file, exc)
 
+    async def _save_async(self):
+        """Non-blocking save — offloads the heavy JSON dump to a thread."""
+        import asyncio
+        await asyncio.to_thread(self._save)
+
+    def _save_background(self):
+        """
+        Fire-and-forget save: schedules disk write in the background.
+        Data is already in self.data (memory), so reads work immediately.
+        The disk write happens asynchronously — callers don't wait.
+        """
+        import asyncio
+        try:
+            loop = asyncio.get_running_loop()
+            loop.call_soon_threadsafe(
+                lambda: asyncio.ensure_future(
+                    asyncio.to_thread(self._save)
+                )
+            )
+        except RuntimeError:
+            # No event loop — fall back to synchronous save
+            self._save()
+
     # ── Collection API (async, matching Motor interface) ──────────────────
 
     async def insert_one(self, doc: dict):
         _id = os.urandom(12).hex()
         doc["_id"] = _id
         self.data[_id] = doc
-        self._save()
+        # Fire-and-forget: data is in memory, disk write happens in background
+        self._save_background()
 
         class InsertResult:
             inserted_id = _id
@@ -85,12 +109,12 @@ class FileBackedCollection:
             _id = os.urandom(12).hex()
             new_doc["_id"] = _id
             self.data[_id] = new_doc
-            self._save()
+            await self._save_async()
             return
         if doc:
             set_data = update.get("$set", {})
             doc.update(set_data)
-            self._save()
+            await self._save_async()
 
     async def replace_one(self, query: dict, replacement: dict, upsert: bool = False):
         doc = await self.find_one(query)
@@ -98,12 +122,12 @@ class FileBackedCollection:
             _id = doc["_id"]
             replacement["_id"] = _id
             self.data[_id] = replacement
-            self._save()
+            await self._save_async()
         elif upsert:
             _id = os.urandom(12).hex()
             replacement["_id"] = _id
             self.data[_id] = replacement
-            self._save()
+            await self._save_async()
 
     async def find(self, query: dict = None):
         """Return all matching docs (simple list)."""

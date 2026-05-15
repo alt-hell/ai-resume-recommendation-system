@@ -1,17 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
   HiOutlineSparkles, HiOutlineLightBulb, HiOutlineChat,
   HiOutlinePaperAirplane, HiOutlineChip,
   HiOutlineRefresh, HiOutlineDocumentText, HiOutlineChartBar,
   HiOutlineGlobe, HiOutlineCode, HiOutlineCurrencyDollar,
-  HiOutlineCube, HiOutlineUser,
+  HiOutlineCube, HiOutlineUser, HiOutlineUpload,
 } from 'react-icons/hi';
-import { askCareerAdvisor } from '../api/client';
+import { askCareerAdvisor, getCareerPrompts } from '../api/client';
 import './CareerAdvisor.css';
 
-/* Prompt text data only — icons resolved at render time inside component */
-const SUGGESTED_PROMPTS = [
+/* Fallback prompts (used while loading or if API fails) */
+const FALLBACK_PROMPTS = [
   { text: "How do I transition from manual testing to DevOps?",   iconKey: "refresh"   },
   { text: "What certifications should I get for Data Science?",    iconKey: "document"  },
   { text: "How can I move from non-tech to data analytics?",       iconKey: "chart"     },
@@ -22,16 +23,42 @@ const SUGGESTED_PROMPTS = [
   { text: "How to prepare for a system design interview?",          iconKey: "cube"      },
 ];
 
+/* Icon rotation for personalized prompts */
+const ICON_KEYS = ["refresh", "document", "chart", "chip", "globe", "code", "dollar", "cube"];
+
 export default function CareerAdvisor() {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [prompts, setPrompts] = useState(FALLBACK_PROMPTS);
+  const [isPersonalized, setIsPersonalized] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  const resumeId = sessionStorage.getItem('resumeId');
+  const resumeId = sessionStorage.getItem('resumeId') || localStorage.getItem('resumeId');
 
-  /* Resolve icon key to JSX element — defined inside component to keep JSX safe */
+  /* Fetch personalized prompts on mount */
+  useEffect(() => {
+    async function loadPrompts() {
+      try {
+        const result = await getCareerPrompts(resumeId);
+        if (result.prompts && result.prompts.length > 0) {
+          const formatted = result.prompts.map((text, i) => ({
+            text,
+            iconKey: ICON_KEYS[i % ICON_KEYS.length],
+          }));
+          setPrompts(formatted);
+          setIsPersonalized(result.personalized || false);
+        }
+      } catch (err) {
+        // Keep fallback prompts
+      }
+    }
+    loadPrompts();
+  }, [resumeId]);
+
+  /* Resolve icon key to JSX element */
   const getPromptIcon = (iconKey) => {
     const map = {
       refresh:  <HiOutlineRefresh />,
@@ -68,6 +95,7 @@ export default function CareerAdvisor() {
         content: result.answer,
         source: result.source,
         model: result.model,
+        contextAware: result.context_aware,
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, aiMsg]);
@@ -114,14 +142,53 @@ export default function CareerAdvisor() {
           </div>
           <div>
             <h1>AI Career <span className="gradient-text">Advisor</span></h1>
-            <p>Ask me anything about your career, learning paths, and professional growth</p>
+            <p>
+              {resumeId
+                ? 'Personalized guidance based on your resume profile'
+                : 'Upload your resume first for personalized career advice'}
+            </p>
           </div>
-          {resumeId && (
+          {resumeId ? (
             <span className="badge badge--teal">
               <HiOutlineChip /> Resume Context Active
             </span>
+          ) : (
+            <button
+              className="badge badge--amber"
+              onClick={() => navigate('/upload')}
+              style={{ cursor: 'pointer', border: 'none', background: 'rgba(245,158,11,0.15)', color: '#f59e0b' }}
+            >
+              <HiOutlineUpload /> Upload Resume
+            </button>
           )}
         </div>
+
+        {/* No Resume Warning */}
+        {!resumeId && messages.length === 0 && (
+          <motion.div
+            className="advisor-no-resume"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{
+              background: 'rgba(245,158,11,0.08)',
+              border: '1px solid rgba(245,158,11,0.2)',
+              borderRadius: '12px',
+              padding: '16px 20px',
+              marginBottom: '16px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              fontSize: '0.9rem',
+              color: 'rgba(255,255,255,0.8)',
+            }}
+          >
+            <HiOutlineUpload style={{ fontSize: '1.3rem', color: '#f59e0b', flexShrink: 0 }} />
+            <span>
+              <strong>Pro tip:</strong> Upload your resume first to get advice tailored to your specific skills, 
+              gaps, and career goals. Without a resume, you'll get general guidance only.
+            </span>
+          </motion.div>
+        )}
 
         {/* Chat Area */}
         <div className="advisor-chat">
@@ -130,15 +197,23 @@ export default function CareerAdvisor() {
               <div className="advisor-welcome__icon">
                 <HiOutlineChat />
               </div>
-              <h2>Welcome to Your AI Career Advisor</h2>
-              <p>I can help you with career transitions, learning roadmaps, skill recommendations, and interview preparation. Ask me anything!</p>
+              <h2>
+                {resumeId
+                  ? 'Your AI Career Advisor is Ready'
+                  : 'Welcome to AI Career Advisor'}
+              </h2>
+              <p>
+                {resumeId
+                  ? 'I\'ve analyzed your resume and can give you personalized advice about your career path, skill gaps, and growth opportunities.'
+                  : 'I can help you with career transitions, learning roadmaps, and interview preparation. Upload your resume for personalized advice!'}
+              </p>
               
               <div className="advisor-welcome__divider">
-                <span>Try asking</span>
+                <span>{isPersonalized ? 'Personalized for you' : 'Try asking'}</span>
               </div>
 
               <div className="advisor-prompts">
-                {SUGGESTED_PROMPTS.map((prompt, i) => (
+                {prompts.map((prompt, i) => (
                   <motion.button
                     key={i}
                     className="advisor-prompt-chip"
@@ -176,7 +251,10 @@ export default function CareerAdvisor() {
                       </div>
                       {msg.source === 'ai' && (
                         <span className="advisor-message__meta">
-                          <HiOutlineSparkles /> Powered by TheCorrelation
+                          <HiOutlineSparkles /> 
+                          {msg.contextAware 
+                            ? ' Personalized to your resume' 
+                            : ' Powered by TheCorrelation'}
                         </span>
                       )}
                     </div>
@@ -209,7 +287,7 @@ export default function CareerAdvisor() {
         <div className="advisor-input-area">
           {messages.length > 0 && (
             <div className="advisor-quick-prompts">
-              {SUGGESTED_PROMPTS.slice(0, 4).map((p, i) => (
+              {prompts.slice(0, 4).map((p, i) => (
                 <button
                   key={i}
                   className="advisor-quick-chip"
@@ -217,7 +295,7 @@ export default function CareerAdvisor() {
                   disabled={loading}
                 >
                   <span className="advisor-quick-chip__icon">{getPromptIcon(p.iconKey)}</span>
-                  {p.text.slice(0, 35)}...
+                  {p.text.length > 38 ? p.text.slice(0, 35) + '...' : p.text}
                 </button>
               ))}
             </div>
@@ -226,7 +304,9 @@ export default function CareerAdvisor() {
             <textarea
               ref={inputRef}
               className="advisor-input"
-              placeholder="Ask me about career paths, skills, transitions..."
+              placeholder={resumeId 
+                ? "Ask about your career path, skill gaps, next steps..." 
+                : "Ask me about career paths, skills, transitions..."}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
