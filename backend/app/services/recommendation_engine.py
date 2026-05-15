@@ -652,7 +652,7 @@ def _get_course_recommendation(role: str) -> Optional[dict]:
             "title": "Mastering Data Science & AI",
             "provider": "TheCorrelation",
             "description": "Accelerate your career in Data and AI with comprehensive programs designed by industry experts. Click to learn more.",
-            "url": "https://thecorrelation.in/courses/elevate-program"
+            "url": "https://thecorrelation.in/courses/chartered-data-science"
         }
     return None
 

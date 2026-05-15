@@ -93,7 +93,7 @@ async def get_recommendation(
                     "salary_range": "8 - 25 LPA",
                     "roles": ["Data Scientist", "ML Engineer", "AI Developer", "Research Analyst"],
                 },
-                "url": "https://thecorrelation.in/courses/elevate-program",
+                "url": "https://thecorrelation.in/courses/chartered-data-science",
             },
             {
                 "title": "Data Analytics Mastery",
@@ -113,7 +113,7 @@ async def get_recommendation(
                     "salary_range": "5 - 12 LPA",
                     "roles": ["Data Analyst", "BI Analyst", "Reporting Analyst", "Analytics Consultant"],
                 },
-                "url": "https://thecorrelation.in",
+                "url": "https://thecorrelation.in/courses/applied-data-analytics",
             },
             {
                 "title": "Generative AI & LLM Engineering",
@@ -235,7 +235,7 @@ async def get_recommendation(
                 "why_learn": "Data Analytics is one of the fastest-growing fields with 25%+ YoY job growth. Average salary: 6-15 LPA.",
                 "prerequisites": "Basic computer skills and logical thinking -- you already have these!",
                 "skills_to_learn": ["SQL", "Excel", "Tableau", "Power BI", "Python basics"],
-                "explore_url": "https://thecorrelation.in",
+                "explore_url": "https://thecorrelation.in/courses/applied-data-analytics",
                 "youtube_url": "https://www.youtube.com/results?search_query=data+analytics+roadmap+for+beginners+2025",
             },
             {
@@ -245,7 +245,7 @@ async def get_recommendation(
                 "why_learn": "Companies need professionals who combine business acumen with data skills. Average salary: 8-18 LPA.",
                 "prerequisites": "Business understanding and analytical mindset -- your existing skills are a huge advantage!",
                 "skills_to_learn": ["SQL", "Statistics", "Tableau", "Power BI", "Python"],
-                "explore_url": "https://thecorrelation.in",
+                "explore_url": "https://thecorrelation.in/courses/chartered-bussiness-analytics",
                 "youtube_url": "https://www.youtube.com/results?search_query=business+analytics+career+guide+2025",
             },
             {
@@ -255,7 +255,7 @@ async def get_recommendation(
                 "why_learn": "Data Science remains the #1 most sought-after tech role. Average salary: 10-25 LPA.",
                 "prerequisites": "Start with Python basics and math -- structured programs make it easy to learn step by step.",
                 "skills_to_learn": ["Python", "Statistics", "Machine Learning", "Pandas", "scikit-learn"],
-                "explore_url": "https://thecorrelation.in/courses/elevate-program",
+                "explore_url": "https://thecorrelation.in/courses/chartered-data-science",
                 "youtube_url": "https://www.youtube.com/results?search_query=data+science+roadmap+for+beginners+2025",
             },
             {
